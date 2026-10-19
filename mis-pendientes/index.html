@@ -4,30 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mis pendientes</title>
+
+  <!-- Aplica el tema guardado (claro u oscuro) antes de dibujar la página,
+       para que no haya un parpadeo al cargar. -->
+  <script>
+    try {
+      var tema = localStorage.getItem("mis-pendientes-tema");
+      if (!tema) {
+        tema = window.matchMedia("(prefers-color-scheme: dark)").matches ? "oscuro" : "claro";
+      }
+      document.documentElement.setAttribute("data-tema", tema);
+    } catch (error) {
+      document.documentElement.setAttribute("data-tema", "claro");
+    }
+  </script>
+
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="tarjeta">
-    <h1>Mis pendientes</h1>
+
+    <header class="encabezado">
+      <h1>Mis pendientes</h1>
+      <button type="button" id="boton-tema" class="boton-tema">Modo oscuro</button>
+    </header>
 
     <form id="formulario" class="formulario">
-      <input
-        type="text"
-        id="campo-tarea"
-        placeholder="Escribe una nueva tarea..."
-        autocomplete="off"
-        aria-label="Nueva tarea"
-      >
-      <button type="submit">Agregar</button>
+      <div class="fila-principal">
+        <input
+          type="text"
+          id="campo-tarea"
+          placeholder="Escribe una nueva tarea..."
+          autocomplete="off"
+          maxlength="200"
+          aria-label="Nueva tarea"
+        >
+        <button type="submit" class="boton-agregar">Agregar</button>
+      </div>
+
+      <div class="fila-opciones">
+        <label>
+          Fecha límite
+          <input type="date" id="campo-fecha">
+        </label>
+        <label>
+          Prioridad
+          <select id="campo-prioridad">
+            <option value="alta">Alta</option>
+            <option value="media" selected>Media</option>
+            <option value="baja">Baja</option>
+          </select>
+        </label>
+      </div>
     </form>
 
-    <p id="contador" class="contador"></p>
+    <div class="barra">
+      <p id="contador" class="contador"></p>
+
+      <div class="filtros" role="group" aria-label="Filtrar tareas">
+        <button type="button" class="filtro" data-filtro="todas">Todas</button>
+        <button type="button" class="filtro" data-filtro="pendientes">Pendientes</button>
+        <button type="button" class="filtro" data-filtro="terminadas">Terminadas</button>
+      </div>
+    </div>
 
     <ul id="lista" class="lista"></ul>
 
-    <p id="mensaje-vacio" class="mensaje-vacio" hidden>
-      No tienes tareas. ¡Agrega la primera!
-    </p>
+    <p id="mensaje-vacio" class="mensaje-vacio" hidden></p>
+
+    <div class="pie">
+      <p class="ayuda">Arrastra las tareas para reordenarlas. Doble clic en el texto para editar.</p>
+      <button type="button" id="borrar-terminadas" class="borrar-terminadas">Borrar terminadas</button>
+    </div>
   </main>
 
   <script src="script.js"></script>
