@@ -1,5 +1,7 @@
+/* ---------- Colores (modo claro por defecto) ---------- */
 :root {
-  --fondo: #c7d2fe;
+  --fondo-1: #c7d2fe;
+  --fondo-2: #a5b4fc;
   --fondo-campo: #f1f5f9;
   --tarjeta: #ffffff;
   --texto: #0f172a;
@@ -9,26 +11,38 @@
   --primario-oscuro: #4338ca;
   --peligro: #dc2626;
   --peligro-fondo: #fef2f2;
+  --alta-texto: #b91c1c;
+  --alta-fondo: #fee2e2;
+  --media-texto: #92400e;
+  --media-fondo: #fef3c7;
+  --baja-texto: #166534;
+  --baja-fondo: #dcfce7;
   --sombra: 0 20px 50px rgba(30, 27, 75, 0.25);
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --fondo: #020617;
-    --fondo-campo: #0f172a;
-    --tarjeta: #1e293b;
-    --texto: #f1f5f9;
-    --texto-suave: #94a3b8;
-    --borde: #334155;
-    --primario: #6366f1;
-    --primario-oscuro: #818cf8;
-    --peligro: #f87171;
-    --peligro-fondo: #3b1d1d;
-    --sombra: 0 20px 50px rgba(0, 0, 0, 0.6);
-    body {
-    background: linear-gradient(135deg, #020617, #1e1b4b);
-  }
-  }
+/* ---------- Colores del modo oscuro ---------- */
+/* Se activa cuando <html> tiene data-tema="oscuro" (lo pone el botón de tema) */
+[data-tema="oscuro"] {
+  --fondo-1: #020617;
+  --fondo-2: #1e1b4b;
+  --fondo-campo: #0f172a;
+  --tarjeta: #1e293b;
+  --texto: #f1f5f9;
+  --texto-suave: #94a3b8;
+  --borde: #334155;
+  --primario: #6366f1;
+  --primario-oscuro: #818cf8;
+  --peligro: #f87171;
+  --peligro-fondo: #3b1d1d;
+  --alta-texto: #fca5a5;
+  --alta-fondo: #450a0a;
+  --media-texto: #fcd34d;
+  --media-fondo: #422006;
+  --baja-texto: #86efac;
+  --baja-fondo: #052e16;
+  --sombra: 0 20px 50px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
 }
 
 * {
@@ -43,14 +57,15 @@ body {
   align-items: flex-start;
   padding: 48px 16px;
   font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-    background: linear-gradient(135deg, var(--fondo), #a5b4fc);
+  background: linear-gradient(135deg, var(--fondo-1), var(--fondo-2));
+  background-attachment: fixed;
   color: var(--texto);
 }
 
 /* ---------- Tarjeta principal ---------- */
 .tarjeta {
   width: 100%;
-  max-width: 520px;
+  max-width: 560px;
   background: var(--tarjeta);
   border: 1px solid var(--borde);
   border-radius: 16px;
@@ -58,75 +73,169 @@ body {
   box-shadow: var(--sombra);
 }
 
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
 h1 {
-  margin: 0 0 24px;
+  margin: 0;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: -0.5px;
-  color: var(--texto);
 }
 
-/* ---------- Formulario ---------- */
-.formulario {
-  display: flex;
-  gap: 10px;
-}
-
-.formulario input {
-  flex: 1;
-  min-width: 0;
-  padding: 12px 14px;
-  font-size: 1rem;
-  font-family: inherit;
-  color: var(--texto);
-  background: var(--fondo);
-  border: 2px solid transparent;
-  border-radius: 10px;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.formulario input::placeholder {
-  color: var(--texto-suave);
-}
-
-.formulario input:focus {
-  outline: none;
-  border-color: var(--primario);
-  background: var(--tarjeta);
-}
-
+/* ---------- Botones en general ---------- */
 button {
   cursor: pointer;
   font-family: inherit;
   font-size: 1rem;
   border: none;
   border-radius: 10px;
-  transition: background 0.2s, transform 0.1s;
+  transition: background 0.2s, transform 0.1s, opacity 0.2s;
 }
 
 button:active {
   transform: scale(0.96);
 }
 
-.formulario button {
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primario);
+  outline-offset: 2px;
+}
+
+.boton-tema {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texto);
+  background: var(--fondo-campo);
+  border: 1px solid var(--borde);
+  white-space: nowrap;
+}
+
+.boton-tema:hover {
+  border-color: var(--primario);
+}
+
+/* ---------- Formulario ---------- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fila-principal {
+  display: flex;
+  gap: 10px;
+}
+
+.fila-principal input {
+  flex: 1;
+  min-width: 0;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--texto);
+  background: var(--fondo-campo);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+input[type="text"]::placeholder {
+  color: var(--texto-suave);
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primario);
+  background: var(--tarjeta);
+}
+
+.boton-agregar {
   padding: 12px 20px;
   font-weight: 600;
   color: #ffffff;
   background: var(--primario);
 }
 
-.formulario button:hover {
+.boton-agregar:hover {
   background: var(--primario-oscuro);
 }
 
-/* ---------- Contador ---------- */
+.fila-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.fila-opciones label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.fila-opciones input,
+.fila-opciones select {
+  padding: 8px 10px;
+  font-size: 0.95rem;
+}
+
+/* ---------- Contador y filtros ---------- */
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 8px;
+}
+
 .contador {
-  margin: 20px 0 8px;
+  margin: 0;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.3px;
   text-transform: uppercase;
   color: var(--texto-suave);
+}
+
+.filtros {
+  display: flex;
+  gap: 6px;
+}
+
+.filtro {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  background: var(--fondo-campo);
+}
+
+.filtro:hover {
+  color: var(--texto);
+}
+
+.filtro.activo {
+  color: #ffffff;
+  background: var(--primario);
 }
 
 /* ---------- Lista de tareas ---------- */
@@ -139,10 +248,11 @@ button:active {
 .tarea {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 10px;
+  gap: 10px;
+  padding: 12px 8px;
   border-bottom: 1px solid var(--borde);
   border-radius: 8px;
+  cursor: grab;
   transition: background 0.2s;
 }
 
@@ -151,7 +261,14 @@ button:active {
 }
 
 .tarea:hover {
-  background: var(--fondo);
+  background: var(--fondo-campo);
+}
+
+.tarea .asa {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  letter-spacing: -2px;
+  user-select: none;
 }
 
 .tarea input[type="checkbox"] {
@@ -159,14 +276,21 @@ button:active {
   height: 20px;
   cursor: pointer;
   accent-color: var(--primario);
+  flex-shrink: 0;
+}
+
+.tarea .contenido {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .tarea .texto {
-  flex: 1;
   font-size: 1rem;
   line-height: 1.4;
   word-break: break-word;
-  transition: color 0.2s;
 }
 
 /* Tarea terminada */
@@ -176,44 +300,182 @@ button:active {
   opacity: 0.7;
 }
 
-/* Botón eliminar: discreto hasta que pasas el cursor */
-.tarea .eliminar {
-  padding: 6px 12px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--peligro);
-  background: transparent;
-  opacity: 0.6;
+/* Estados al arrastrar */
+.tarea.arrastrando {
+  opacity: 0.4;
 }
 
-.tarea:hover .eliminar,
-.tarea .eliminar:focus-visible {
+.tarea.sobre {
+  background: var(--fondo-campo);
+  box-shadow: inset 0 3px 0 var(--primario);
+}
+
+/* ---------- Etiquetas de prioridad y fecha ---------- */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.etiqueta {
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  background: var(--fondo-campo);
+  color: var(--texto-suave);
+}
+
+.etiqueta.prioridad-alta {
+  color: var(--alta-texto);
+  background: var(--alta-fondo);
+}
+
+.etiqueta.prioridad-media {
+  color: var(--media-texto);
+  background: var(--media-fondo);
+}
+
+.etiqueta.prioridad-baja {
+  color: var(--baja-texto);
+  background: var(--baja-fondo);
+}
+
+.etiqueta.vencida {
+  color: var(--alta-texto);
+  background: var(--alta-fondo);
+}
+
+/* ---------- Botones de cada tarea ---------- */
+.acciones {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.acciones button {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: transparent;
+  opacity: 0.7;
+}
+
+.acciones .editar,
+.acciones .guardar {
+  color: var(--primario);
+}
+
+.acciones .eliminar {
+  color: var(--peligro);
+}
+
+.acciones .cancelar {
+  color: var(--texto-suave);
+}
+
+.tarea:hover .acciones button,
+.acciones button:focus-visible {
   opacity: 1;
+}
+
+.acciones .editar:hover,
+.acciones .guardar:hover {
+  background: var(--fondo-campo);
+}
+
+.acciones .eliminar:hover {
   background: var(--peligro-fondo);
+}
+
+.acciones .cancelar:hover {
+  background: var(--fondo-campo);
+}
+
+/* ---------- Edición de una tarea ---------- */
+.tarea.editando {
+  cursor: default;
+  background: var(--fondo-campo);
+}
+
+.campo-edicion {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px !important;
+  font-size: 1rem;
 }
 
 /* ---------- Mensaje de lista vacía ---------- */
 .mensaje-vacio {
-  margin: 32px 0 8px;
+  margin: 28px 0 8px;
   text-align: center;
   color: var(--texto-suave);
 }
 
+/* ---------- Pie de la tarjeta ---------- */
+.pie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--borde);
+}
+
+.ayuda {
+  margin: 0;
+  flex: 1;
+  min-width: 180px;
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+.borrar-terminadas {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--peligro);
+  background: var(--peligro-fondo);
+}
+
+.borrar-terminadas:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.borrar-terminadas:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
 /* ---------- Pantallas pequeñas (celular) ---------- */
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   body {
     padding: 24px 12px;
   }
 
   .tarjeta {
-    padding: 22px;
+    padding: 20px;
   }
 
   h1 {
     font-size: 1.6rem;
   }
 
-  .tarea .eliminar {
-    opacity: 1; /* en celular no existe "pasar el cursor" */
+  .tarea {
+    flex-wrap: wrap;
+  }
+
+  .tarea .contenido {
+    flex-basis: calc(100% - 80px);
+  }
+
+  .acciones {
+    margin-left: auto;
+  }
+
+  .acciones button {
+    opacity: 1;
   }
 }
