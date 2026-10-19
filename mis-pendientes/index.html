@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis pendientes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="tarjeta">
+    <h1>Mis pendientes</h1>
+
+    <form id="formulario" class="formulario">
+      <input
+        type="text"
+        id="campo-tarea"
+        placeholder="Escribe una nueva tarea..."
+        autocomplete="off"
+        aria-label="Nueva tarea"
+      >
+      <button type="submit">Agregar</button>
+    </form>
+
+    <p id="contador" class="contador"></p>
+
+    <ul id="lista" class="lista"></ul>
+
+    <p id="mensaje-vacio" class="mensaje-vacio" hidden>
+      No tienes tareas. ¡Agrega la primera!
+    </p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

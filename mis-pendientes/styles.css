@@ -1,0 +1,219 @@
+:root {
+  --fondo: #c7d2fe;
+  --fondo-campo: #f1f5f9;
+  --tarjeta: #ffffff;
+  --texto: #0f172a;
+  --texto-suave: #64748b;
+  --borde: #e2e8f0;
+  --primario: #4f46e5;
+  --primario-oscuro: #4338ca;
+  --peligro: #dc2626;
+  --peligro-fondo: #fef2f2;
+  --sombra: 0 20px 50px rgba(30, 27, 75, 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #020617;
+    --fondo-campo: #0f172a;
+    --tarjeta: #1e293b;
+    --texto: #f1f5f9;
+    --texto-suave: #94a3b8;
+    --borde: #334155;
+    --primario: #6366f1;
+    --primario-oscuro: #818cf8;
+    --peligro: #f87171;
+    --peligro-fondo: #3b1d1d;
+    --sombra: 0 20px 50px rgba(0, 0, 0, 0.6);
+    body {
+    background: linear-gradient(135deg, #020617, #1e1b4b);
+  }
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 16px;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    background: linear-gradient(135deg, var(--fondo), #a5b4fc);
+  color: var(--texto);
+}
+
+/* ---------- Tarjeta principal ---------- */
+.tarjeta {
+  width: 100%;
+  max-width: 520px;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--sombra);
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--texto);
+}
+
+/* ---------- Formulario ---------- */
+.formulario {
+  display: flex;
+  gap: 10px;
+}
+
+.formulario input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.formulario input::placeholder {
+  color: var(--texto-suave);
+}
+
+.formulario input:focus {
+  outline: none;
+  border-color: var(--primario);
+  background: var(--tarjeta);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+.formulario button {
+  padding: 12px 20px;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--primario);
+}
+
+.formulario button:hover {
+  background: var(--primario-oscuro);
+}
+
+/* ---------- Contador ---------- */
+.contador {
+  margin: 20px 0 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+/* ---------- Lista de tareas ---------- */
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tarea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 10px;
+  border-bottom: 1px solid var(--borde);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.tarea:last-child {
+  border-bottom: none;
+}
+
+.tarea:hover {
+  background: var(--fondo);
+}
+
+.tarea input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primario);
+}
+
+.tarea .texto {
+  flex: 1;
+  font-size: 1rem;
+  line-height: 1.4;
+  word-break: break-word;
+  transition: color 0.2s;
+}
+
+/* Tarea terminada */
+.tarea.terminada .texto {
+  text-decoration: line-through;
+  color: var(--texto-suave);
+  opacity: 0.7;
+}
+
+/* Botón eliminar: discreto hasta que pasas el cursor */
+.tarea .eliminar {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--peligro);
+  background: transparent;
+  opacity: 0.6;
+}
+
+.tarea:hover .eliminar,
+.tarea .eliminar:focus-visible {
+  opacity: 1;
+  background: var(--peligro-fondo);
+}
+
+/* ---------- Mensaje de lista vacía ---------- */
+.mensaje-vacio {
+  margin: 32px 0 8px;
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+/* ---------- Pantallas pequeñas (celular) ---------- */
+@media (max-width: 480px) {
+  body {
+    padding: 24px 12px;
+  }
+
+  .tarjeta {
+    padding: 22px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .tarea .eliminar {
+    opacity: 1; /* en celular no existe "pasar el cursor" */
+  }
+}
